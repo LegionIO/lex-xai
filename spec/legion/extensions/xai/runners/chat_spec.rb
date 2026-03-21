@@ -70,5 +70,30 @@ RSpec.describe Legion::Extensions::Xai::Runners::Chat do
 
       instance.create(api_key: api_key, messages: messages)
     end
+
+    it 'defaults stream to false' do
+      allow(faraday_conn).to receive(:post)
+        .with('/v1/chat/completions', hash_including(stream: false))
+        .and_return(success_response)
+
+      instance.create(api_key: api_key, messages: messages)
+    end
+
+    it 'allows stream to be set to true' do
+      allow(faraday_conn).to receive(:post)
+        .with('/v1/chat/completions', hash_including(stream: true))
+        .and_return(success_response)
+
+      result = instance.create(api_key: api_key, messages: messages, stream: true)
+      expect(result).to have_key(:result)
+    end
+
+    it 'returns a hash with a :result key' do
+      allow(faraday_conn).to receive(:post).and_return(success_response)
+
+      result = instance.create(api_key: api_key, messages: messages)
+      expect(result).to be_a(Hash)
+      expect(result).to have_key(:result)
+    end
   end
 end

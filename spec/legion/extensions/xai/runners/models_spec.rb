@@ -65,5 +65,19 @@ RSpec.describe Legion::Extensions::Xai::Runners::Models do
       expect(result).to have_key(:model)
       expect(result[:model]['id']).to eq('grok-3')
     end
+
+    it 'encodes the model name in the URL path' do
+      allow(faraday_conn).to receive(:get).with('/v1/models/grok-2').and_return(model_response)
+
+      instance.retrieve(api_key: api_key, model: 'grok-2')
+    end
+
+    it 'returns a hash with a :model key' do
+      allow(faraday_conn).to receive(:get).with('/v1/models/grok-3').and_return(model_response)
+
+      result = instance.retrieve(api_key: api_key, model: 'grok-3')
+      expect(result).to be_a(Hash)
+      expect(result).to have_key(:model)
+    end
   end
 end
