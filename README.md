@@ -1,6 +1,10 @@
 # lex-xai
 
-LegionIO extension for the [xAI Grok API](https://docs.x.ai).
+Legion Extension for the xAI Grok API.
+
+## Purpose
+
+Wraps the xAI Grok REST API as named runners consumable by any LegionIO task chain. Provides chat completions, embeddings, and model listing. Use this extension when you need direct access to the xAI API surface within the LEX runner/actor lifecycle. For simple chat/embed workflows, consider `legion-llm` instead.
 
 ## Installation
 
@@ -47,6 +51,12 @@ result = create(api_key: 'your-key', messages: [{ role: 'user', content: 'Hello!
 | `Chat` | `create` |
 | `Models` | `list`, `retrieve` |
 | `Embeddings` | `create` |
+
+## Related
+
+- `lex-openai` — OpenAI integration (same structural pattern)
+- `legion-llm` — High-level LLM interface across providers
+- `extensions-ai/CLAUDE.md` — Architecture patterns shared across all AI extensions
 
 ## License
 
