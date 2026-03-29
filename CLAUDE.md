@@ -10,7 +10,7 @@ Legion Extension that connects LegionIO to the xAI Grok API. Provides runners fo
 
 **GitHub**: https://github.com/LegionIO/lex-xai
 **License**: MIT
-**Version**: 0.1.0
+**Version**: 0.1.2
 **Specs**: 23 examples
 
 ## Architecture
@@ -19,7 +19,7 @@ Legion Extension that connects LegionIO to the xAI Grok API. Provides runners fo
 Legion::Extensions::Xai
 ├── Runners/
 │   ├── Chat           # create(api_key:, messages:, model: 'grok-3', ...)
-│   ├── Embeddings     # create(api_key:, input:, model:, ...)
+│   ├── Embeddings     # create(api_key:, input:, model: 'embedding-beta', ...)
 │   └── Models         # list(api_key:, ...), retrieve(api_key:, model:, ...)
 ├── Helpers/
 │   └── Client         # Faraday-based xAI API client (module, factory method)
@@ -32,8 +32,8 @@ Legion::Extensions::Xai
 
 ## Key Design Decisions
 
-- Structurally identical to lex-openai and lex-claude (module-based `Helpers::Client`, `extend` in runners), but with no multipart dependency and no `multi_json` list in the gemspec for lex-openai parity — `multi_json` is listed as a dependency.
-- Default model for `Chat#create` is `'grok-3'`.
+- Structurally identical to lex-claude (module-based `Helpers::Client`, `extend` in runners, `multi_json` dependency, standalone `Client` class), but targeting the xAI API.
+- Default model for `Chat#create` is `'grok-3'`. Default model for `Embeddings#create` is `'embedding-beta'`.
 - `Chat#create` supports `stream: false` kwarg (passed through to API body) but does not handle streaming responses internally.
 - API paths use `/v1/` prefix: `/v1/chat/completions`, `/v1/models`, `/v1/models/:model`, `/v1/embeddings`.
 - `Models#retrieve` uses the method name `retrieve` (not `get`) for consistency with lex-claude and lex-openai.
