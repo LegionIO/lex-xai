@@ -9,7 +9,7 @@ require 'legion/extensions/xai/runners/embeddings'
 module Legion
   module Extensions
     module Xai
-      extend Legion::Extensions::Core if Legion::Extensions.const_defined? :Core
+      extend Legion::Extensions::Core if Legion::Extensions.const_defined? :Core, false
     end
   end
 end
