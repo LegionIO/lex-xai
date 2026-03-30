@@ -9,7 +9,7 @@ module Legion
         module Chat
           extend Legion::Extensions::Xai::Helpers::Client
 
-          def create(api_key:, messages:, model: 'grok-3', max_tokens: nil, temperature: nil, # rubocop:disable Metrics/ParameterLists
+          def create(api_key:, messages:, model: 'grok-3', max_tokens: nil, temperature: nil,
                      stream: false, **)
             body = { model: model, messages: messages, stream: stream }
             body[:max_tokens] = max_tokens if max_tokens
@@ -19,8 +19,8 @@ module Legion
             { result: response.body }
           end
 
-          include Legion::Extensions::Helpers::Lex if Legion::Extensions.const_defined?(:Helpers) &&
-                                                      Legion::Extensions::Helpers.const_defined?(:Lex)
+          include Legion::Extensions::Helpers::Lex if Legion::Extensions.const_defined?(:Helpers, false) &&
+                                                      Legion::Extensions::Helpers.const_defined?(:Lex, false)
         end
       end
     end
