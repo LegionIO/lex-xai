@@ -16,7 +16,16 @@ module Legion
             body[:temperature] = temperature if temperature
 
             response = client(api_key: api_key, **).post('/v1/chat/completions', body)
-            { result: response.body }
+            body = response.body
+            {
+              result: body,
+              usage:  {
+                input_tokens:       body.dig('usage', 'prompt_tokens') || 0,
+                output_tokens:      body.dig('usage', 'completion_tokens') || 0,
+                cache_read_tokens:  0,
+                cache_write_tokens: 0
+              }
+            }
           end
 
           include Legion::Extensions::Helpers::Lex if Legion::Extensions.const_defined?(:Helpers, false) &&
