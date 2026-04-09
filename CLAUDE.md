@@ -10,8 +10,8 @@ Legion Extension that connects LegionIO to the xAI Grok API. Provides runners fo
 
 **GitHub**: https://github.com/LegionIO/lex-xai
 **License**: MIT
-**Version**: 0.1.2
-**Specs**: 23 examples
+**Version**: 0.1.5
+**Specs**: 43 examples (4 spec files)
 
 ## Architecture
 
@@ -26,7 +26,7 @@ Legion::Extensions::Xai
 └── Client             # Standalone client class (includes all runners, holds @config)
 ```
 
-`Helpers::Client` is a **module** with a `client(api_key:, base_url: DEFAULT_BASE_URL, ...)` factory method. `DEFAULT_BASE_URL` is `'https://api.x.ai'`. Authentication uses `Authorization: Bearer #{api_key}` header. Runner modules `extend` it to gain `client(...)` as a module-level method.
+`Helpers::Client` is a **module** with a `client(api_key:, base_url: DEFAULT_BASE_URL, ...)` factory method. `DEFAULT_BASE_URL = 'https://api.x.ai'`. Authentication uses `Authorization: Bearer #{api_key}` header. Runner modules `extend` it to gain `client(...)` as a module-level method.
 
 `Client` (class) provides a standalone instantiable wrapper that holds `@config` and delegates through `Helpers::Client`.
 
@@ -37,6 +37,7 @@ Legion::Extensions::Xai
 - `Chat#create` supports `stream: false` kwarg (passed through to API body) but does not handle streaming responses internally.
 - API paths use `/v1/` prefix: `/v1/chat/completions`, `/v1/models`, `/v1/models/:model`, `/v1/embeddings`.
 - `Models#retrieve` uses the method name `retrieve` (not `get`) for consistency with lex-claude and lex-openai.
+- `Chat` and `Embeddings` return `{ result: response.body }`. `Models` returns `{ models: ... }` / `{ model: ... }`.
 - `include Legion::Extensions::Helpers::Lex` is guarded with `const_defined?` pattern.
 
 ## Dependencies
@@ -45,15 +46,17 @@ Legion::Extensions::Xai
 |-----|---------|
 | `faraday` >= 2.0 | HTTP client for xAI API |
 | `multi_json` | JSON parser abstraction |
+| `legion-cache`, `legion-crypt`, `legion-data`, `legion-json`, `legion-logging`, `legion-settings`, `legion-transport` | LegionIO core |
 
 ## Testing
 
 ```bash
 bundle install
-bundle exec rspec        # 23 examples
+bundle exec rspec        # 43 examples
 bundle exec rubocop
 ```
 
 ---
 
 **Maintained By**: Matthew Iverson (@Esity)
+**Last Updated**: 2026-04-06
