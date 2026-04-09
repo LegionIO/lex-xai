@@ -5,6 +5,7 @@ require 'legion/extensions/xai/helpers/client'
 require 'legion/extensions/xai/runners/chat'
 require 'legion/extensions/xai/runners/models'
 require 'legion/extensions/xai/runners/embeddings'
+require 'legion/extensions/xai/identity'
 
 module Legion
   module Extensions
